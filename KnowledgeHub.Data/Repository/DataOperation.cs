@@ -1,5 +1,6 @@
 ﻿using KnowledgeHub.Data.Interfaces;
 using KnowledgeHub.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,16 @@ namespace KnowledgeHub.Data.Repository
     public class DataOperation : IDataOperation
     {
         private List<DataContent> _itemList;
-        public List<DataContent> GetAll()
+        private readonly DataStoreContext _context;
+
+        public async Task<List<DataContent>> Get()
         {
-            return _itemList;
+            return await _context.DataContent.ToListAsync();
         }
 
-        public DataOperation()
+        public DataOperation(DataStoreContext context)
         {
+            _context = context;
             InitializeData();
         }
         public void Delete(int id)
@@ -27,26 +31,31 @@ namespace KnowledgeHub.Data.Repository
 
         public bool DoesItemExist(int id)
         {
-            return _itemList.Any(item => item.id == id);
+            throw new NotImplementedException();
         }
 
-        public DataContent Get(int id)
+        public async Task<DataContent> Get(int id)
         {
-            return _itemList.FirstOrDefault(item => item.id == id);
+            var data = await _context.DataContent.FindAsync(id);
+            return data;
         }
 
-        public void Insert(DataContent item)
+        public async Task<DataContent> Insert(DataContent item)
         {
-            _itemList.Add(item);
+            _context.DataContent.Add(item);
+            await _context.SaveChangesAsync();
+            return item;
         }
 
-        public void Update(DataContent item)
+        public async Task<DataContent> Update(DataContent item)
         {
-            var dataItem = this.Get(item.id);
-            var index = _itemList.IndexOf(dataItem);
-            _itemList.RemoveAt(index);
-            _itemList.Insert(index, item);
+            var data = await _context.DataContent.FindAsync(item.id);
+            data.Title = item.Title;
+            _context.DataContent.Update(data);
+            await _context.SaveChangesAsync();
+            return data;
         }
+
         private void InitializeData()
         {
             _itemList = new List<DataContent>();
@@ -75,11 +84,6 @@ namespace KnowledgeHub.Data.Repository
             _itemList.Add(Item1);
             _itemList.Add(Item2);
             _itemList.Add(Item3);
-        }
-
-        public List<DataContent> Get()
-        {
-            throw new NotImplementedException();
         }
     }
 }

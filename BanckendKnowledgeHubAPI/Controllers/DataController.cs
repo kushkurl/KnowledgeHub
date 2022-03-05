@@ -12,19 +12,19 @@ namespace BanckendKnowledgeHubAPI.Controllers
     [Route("api/Data")]
     public class DataController : ControllerBase
     {
-        private IDataOperation dataContent = new DataOperation();
+        //private IDataOperation dataContent = new DataOperation();
 
-        private readonly DataStoreContext _context;
+        private readonly IDataOperation _dataOperation;
 
-        public DataController(DataStoreContext context)
+        public DataController(IDataOperation dataOperation)
         {
-            _context = context;
+            _dataOperation = dataOperation;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<DataContent>>> Get()
         {
-            return await _context.DataContent.ToListAsync();
+            return await _dataOperation.Get();
             //return dataContent.GetAll();
             //return "working fine";
         }
@@ -32,7 +32,7 @@ namespace BanckendKnowledgeHubAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<DataContent>> Get(int id)
         {
-            var data = await _context.DataContent.FindAsync(id);
+            var data = await _dataOperation.Get(id);
             if (data == null)
                 return BadRequest("Record Not found");
             else
@@ -42,8 +42,7 @@ namespace BanckendKnowledgeHubAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Insert(DataContent data)
         {
-            _context.DataContent.Add(data);
-            await _context.SaveChangesAsync();
+            await _dataOperation.Insert(data);
             return Ok(data);
         }
     }
