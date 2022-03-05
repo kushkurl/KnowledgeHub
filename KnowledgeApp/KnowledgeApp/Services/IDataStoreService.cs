@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace KnowledgeApp.Services
 {
-    public interface IDataStore<T>
+    public interface IDataStoreService
     {
         Task<List<DataContent>> RefreshDataAsync();
 
         Task SaveTodoItemAsync(DataContent item, bool isNewItem);
 
-        Task DeleteTodoItemAsync(string id);
+        Task DeleteTodoItemAsync(int id);
     }
 }

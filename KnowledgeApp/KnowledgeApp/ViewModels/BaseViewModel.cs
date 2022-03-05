@@ -10,7 +10,7 @@ namespace KnowledgeApp.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<DataContent> DataStore => DependencyService.Get<IDataStore<DataContent>>();
+        public IDataStoreService DataStore => DependencyService.Get<IDataStoreService>();
 
         bool isBusy = false;
         public bool IsBusy

@@ -13,7 +13,7 @@ namespace KnowledgeApp
         {
             InitializeComponent();
 
-            DependencyService.Register<DataStore>();
+            DependencyService.Register<DataStoreService>();
             MainPage = new AppShell();
         }
 
