@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:KnowledgeApp.Models"
+             xmlns:viewmodels="clr-namespace:KnowledgeApp.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
+             x:Class="KnowledgeApp.Views.DataListView">
+
+    <ContentPage.BindingContext>
+        <viewmodels:DataListViewModel></viewmodels:DataListViewModel>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ItemSelectedEventArgsConverter x:Key="ItemSelectedEventArgsConverter"></xct:ItemSelectedEventArgsConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <ListView
+                        Background="Transparent"
+                        CachingStrategy="RecycleElement"
+                        ItemsSource="{Binding Data}"
+                        RowHeight="60">
+                    <ListView.Behaviors>
+                        <xct:EventToCommandBehavior
+                                EventName="ItemSelected"
+                                Command="{Binding SelectCommand}"
+                                EventArgsConverter="{StaticResource ItemSelectedEventArgsConverter}">
+                        </xct:EventToCommandBehavior>
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:DataContent">
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="{Binding Title}" TextColor="Black"></Label>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

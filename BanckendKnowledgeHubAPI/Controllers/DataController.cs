@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace BanckendKnowledgeHubAPI.Controllers
 {
@@ -12,7 +13,8 @@ namespace BanckendKnowledgeHubAPI.Controllers
     [Route("api/Data")]
     public class DataController : ControllerBase
     {
-        //private IDataOperation dataContent = new DataOperation();
+        //IDataOperation _dataOperation = DependencyService.Get<IDataOperation>();
+        //private IDataOperation dataContent = new IDataOperation();
 
         private readonly IDataOperation _dataOperation;
 
