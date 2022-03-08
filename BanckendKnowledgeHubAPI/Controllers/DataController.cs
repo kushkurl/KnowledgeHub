@@ -26,6 +26,8 @@ namespace BanckendKnowledgeHubAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<DataContent>>> Get()
         {
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            var resp = new DataContent { id = 1, Title = "Test", Description = "testing desc" };
             return await _dataOperation.Get();
             //return dataContent.GetAll();
             //return "working fine";
@@ -34,6 +36,7 @@ namespace BanckendKnowledgeHubAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<DataContent>> Get(int id)
         {
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
             var data = await _dataOperation.Get(id);
             if (data == null)
                 return BadRequest("Record Not found");
@@ -44,6 +47,7 @@ namespace BanckendKnowledgeHubAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Insert(DataContent data)
         {
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
             await _dataOperation.Insert(data);
             return Ok(data);
         }

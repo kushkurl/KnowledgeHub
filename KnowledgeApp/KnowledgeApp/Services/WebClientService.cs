@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,10 +13,14 @@ namespace KnowledgeApp.Services
         {
             try
             {
-                HttpClient client = new HttpClient();
-                var response = await client.GetAsync(uri);
+                //HttpClient client = new HttpClient();
 
-                return response.IsSuccessStatusCode ? await response.Content.ReadAsStringAsync() : null;
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync("https://kushagrajobmanagerapi.azurewebsites.net/api/data/");
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                return responseBody;
             }
             catch
             {

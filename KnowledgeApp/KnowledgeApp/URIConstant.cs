@@ -7,6 +7,6 @@ namespace KnowledgeApp
 {
     public static class URIConstant
     {
-        public static string RestUrl = DeviceInfo.Platform == DevicePlatform.Android ? "https://localhost:44326/api/data" : "https://localhost:44326/api/data";
+        public static string RestUrl = DeviceInfo.Platform == DevicePlatform.Android ? "https://kushagrajobmanagerapi.azurewebsites.net/api/data" : "https://kushagrajobmanagerapi.azurewebsites.net/api/data";
     }
 }

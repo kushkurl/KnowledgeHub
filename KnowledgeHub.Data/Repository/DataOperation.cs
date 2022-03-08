@@ -16,7 +16,9 @@ namespace KnowledgeHub.Data.Repository
 
         public async Task<List<DataContent>> Get()
         {
-            return await _context.DataContent.ToListAsync();
+            var data = new List<DataContent>{ new DataContent{ id = 1, Title = "Test", Description = "testing desc" },
+                new DataContent{ id = 1, Title = "Test", Description = "testing desc" } };
+            return data;//await _context.DataContent.ToListAsync();
         }
 
         public DataOperation(DataStoreContext context)
@@ -36,8 +38,8 @@ namespace KnowledgeHub.Data.Repository
 
         public async Task<DataContent> Get(int id)
         {
-            var data = await _context.DataContent.FindAsync(id);
-            return data;
+            //var data = await _context.DataContent.FindAsync(id);
+            return null;
         }
 
         public async Task<DataContent> Insert(DataContent item)

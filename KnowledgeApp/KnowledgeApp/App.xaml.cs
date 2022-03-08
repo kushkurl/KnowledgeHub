@@ -17,7 +17,7 @@ namespace KnowledgeApp
             /*DataService = new AzureDataService();
             MainPage = new NavigationPage(new ItemList());*/
             DependencyService.Register<DataContentAPI>();
-            MainPage = new NavigationPage(new DataListView());
+            //MainPage = new NavigationPage(new DataListView());
             MainPage = new AppShell();
         }
 
