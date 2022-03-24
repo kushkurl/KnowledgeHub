@@ -8,7 +8,7 @@
         <viewmodels:DataNewViewModel></viewmodels:DataNewViewModel>
     </ContentPage.BindingContext>
 
-    <ContentPage.Content>
+   
         <ContentPage.Content>
             <StackLayout>
                 <Label Text="Title" FontSize="Medium"/>

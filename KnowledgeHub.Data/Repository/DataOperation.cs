@@ -13,12 +13,13 @@ namespace KnowledgeHub.Data.Repository
     {
         private List<DataContent> _itemList;
         private readonly DataStoreContext _context;
+        /*List<DataContent> data = new List<DataContent>{ new DataContent{ id = 1, Title = "Test", Description = "testing desc" },
+                new DataContent{ id = 1, Title = "Test", Description = "testing desc" } };*/
 
         public async Task<List<DataContent>> Get()
         {
-            var data = new List<DataContent>{ new DataContent{ id = 1, Title = "Test", Description = "testing desc" },
-                new DataContent{ id = 1, Title = "Test", Description = "testing desc" } };
-            return data;//await _context.DataContent.ToListAsync();
+            
+            return _itemList;//await _context.DataContent.ToListAsync();
         }
 
         public DataOperation(DataStoreContext context)
@@ -28,6 +29,8 @@ namespace KnowledgeHub.Data.Repository
         }
         public void Delete(int id)
         {
+            var data = _itemList.Find(x => x.id == id);
+            _itemList.Remove(data);
             throw new NotImplementedException();
         }
 
@@ -39,22 +42,27 @@ namespace KnowledgeHub.Data.Repository
         public async Task<DataContent> Get(int id)
         {
             //var data = await _context.DataContent.FindAsync(id);
-            return null;
+            var data = _itemList.Find(x => x.id == id);
+            return data;
         }
 
         public async Task<DataContent> Insert(DataContent item)
         {
-            _context.DataContent.Add(item);
-            await _context.SaveChangesAsync();
+            /*_context.DataContent.Add(item);
+            await _context.SaveChangesAsync();*/
+            _itemList.Add(item);
             return item;
         }
 
         public async Task<DataContent> Update(DataContent item)
         {
-            var data = await _context.DataContent.FindAsync(item.id);
+            /*var data = await _context.DataContent.FindAsync(item.id);
             data.Title = item.Title;
             _context.DataContent.Update(data);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();*/
+            var data = _itemList.Find(x => x.id == item.id);
+            data.Title = item.Title;
+            data.Description = item.Description;
             return data;
         }
 

@@ -12,6 +12,7 @@ namespace KnowledgeApp.ViewModels
     {
         public ObservableRangeCollection<DataContent> Data { get; set; }
         public AsyncCommand RefreshCommand { get; }
+        public AsyncCommand AddCommand { get; }
         public AsyncCommand<DataContent> SelectCommand { get; }
         private DataContent selectedData;
         public DataContent SelectedData
@@ -27,6 +28,12 @@ namespace KnowledgeApp.ViewModels
             LoadData();
             RefreshCommand = new AsyncCommand(Refresh);
             SelectCommand = new AsyncCommand<DataContent>(Selected);
+            AddCommand = new AsyncCommand(Add);
+        }
+        async Task Add()
+        {
+            var route = $"{nameof(Views.DataDetailView)}";
+            await AppShell.Current.GoToAsync(route);
         }
         private async Task Selected(DataContent data)
         {

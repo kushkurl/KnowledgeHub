@@ -13,9 +13,11 @@
 
         <StackLayout>
             <Label Text="Title" FontSize="Medium"/>
-            <Label Text="{Binding Title}" FontSize="Small"/>
+            <Entry Text="{Binding Title}" FontSize="Small"/>
             <Label Text="Description" FontSize="Medium"/>
-            <Label Text="{Binding Description}" FontSize="Small"/>
+            <Entry Text="{Binding Description}" FontSize="Small"/>
+            <Button Text="Save" Command="{Binding SaveCommand}"></Button>
+            <Button Text="Delete" Command="{Binding DeleteCommand}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
