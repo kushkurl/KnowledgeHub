@@ -15,6 +15,7 @@ namespace KnowledgeHub.Data.Models
 
         }
         public DbSet<DataContent> DataContent { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
     }
 }

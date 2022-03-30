@@ -11,9 +11,10 @@ namespace KnowledgeHub.Data.Interfaces
     {
         bool DoesItemExist(int id);
         Task<List<DataContent>> Get();
+        Task<List<Category>> GetCategories();
         Task<DataContent> Get(int id);
         Task<DataContent> Insert(DataContent item);
         Task<DataContent> Update(DataContent item);
-        void Delete(int id);
+        void Delete(DataContent item);
     }
 }

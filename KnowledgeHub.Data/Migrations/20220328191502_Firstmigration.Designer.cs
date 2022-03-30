@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KnowledgeHub.Data.Migrations
 {
     [DbContext(typeof(DataStoreContext))]
-    [Migration("20220304110052_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220328191502_Firstmigration")]
+    partial class Firstmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,12 +20,30 @@ namespace KnowledgeHub.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("KnowledgeHub.Data.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("KnowledgeHub.Data.Models.DataContent", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -35,7 +53,25 @@ namespace KnowledgeHub.Data.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("DataContent");
+                });
+
+            modelBuilder.Entity("KnowledgeHub.Data.Models.DataContent", b =>
+                {
+                    b.HasOne("KnowledgeHub.Data.Models.Category", "Category")
+                        .WithMany("DataContents")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("KnowledgeHub.Data.Models.Category", b =>
+                {
+                    b.Navigation("DataContents");
                 });
 #pragma warning restore 612, 618
         }

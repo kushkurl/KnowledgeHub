@@ -11,10 +11,10 @@ namespace KnowledgeApp
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(DataListView), typeof(DataListView));
+            //Routing.RegisterRoute(nameof(DataListView), typeof(DataListView));
             Routing.RegisterRoute(nameof(DataDetailView), typeof(DataDetailView));
-            Routing.RegisterRoute(nameof(DataEdit), typeof(DataEdit));
-            Routing.RegisterRoute(nameof(DataNew), typeof(DataNew));
+            Routing.RegisterRoute(nameof(HomeView), typeof(HomeView));
+            //Routing.RegisterRoute(nameof(DataListView), typeof(DataListView));
             /*Routing.RegisterRoute(nameof(ItemList), typeof(ItemList));*/
         }
     }

@@ -9,6 +9,7 @@ namespace KnowledgeApp.Services
     {
 
         //Task<List<DataContent>> GetAllData();
+        Task<List<Category>> GetCategory();
         Task<List<DataContent>> GetData();
         Task<DataContent> GetData(int id);
 

@@ -27,7 +27,7 @@ namespace BanckendKnowledgeHubAPI.Controllers
         public async Task<ActionResult<List<DataContent>>> Get()
         {
             Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            var resp = new DataContent { id = 1, Title = "Test", Description = "testing desc" };
+            //var resp = new DataContent { id = 1, Title = "Test", Description = "testing desc" };
             return await _dataOperation.Get();
             //return dataContent.GetAll();
             //return "working fine";
@@ -51,5 +51,20 @@ namespace BanckendKnowledgeHubAPI.Controllers
             await _dataOperation.Insert(data);
             return Ok(data);
         }
+        [HttpPut]
+        public async Task<ActionResult> Update(DataContent data)
+        {
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            await _dataOperation.Update(data);
+            return Ok(data);
+        }
+        [HttpDelete]
+        public async Task<ActionResult> Delete(DataContent data)
+        {
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            _dataOperation.Delete(data);
+            return Ok(data);
+        }
+
     }
 }

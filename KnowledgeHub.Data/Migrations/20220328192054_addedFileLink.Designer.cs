@@ -3,14 +3,16 @@ using KnowledgeHub.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KnowledgeHub.Data.Migrations
 {
     [DbContext(typeof(DataStoreContext))]
-    partial class DataStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20220328192054_addedFileLink")]
+    partial class addedFileLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,11 +63,13 @@ namespace KnowledgeHub.Data.Migrations
 
             modelBuilder.Entity("KnowledgeHub.Data.Models.DataContent", b =>
                 {
-                    b.HasOne("KnowledgeHub.Data.Models.Category", null)
+                    b.HasOne("KnowledgeHub.Data.Models.Category", "Category")
                         .WithMany("DataContents")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("KnowledgeHub.Data.Models.Category", b =>
