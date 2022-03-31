@@ -1,5 +1,6 @@
 ﻿using KnowledgeApp.Models;
 using KnowledgeApp.ViewModels;
+using MvvmHelpers.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,7 @@ namespace KnowledgeApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomeView : ContentPage
     {
+        //public AsyncCommand<Category> SelectCommand { get; }
         public ObservableCollection<Category> Categories { get; set; }
         DataManagerBase databse;
         public HomeView()
@@ -24,9 +26,17 @@ namespace KnowledgeApp.Views
             InitializeComponent();
             databse = new DataManagerBase();
             Categories = new ObservableCollection<Category>();
+            //SelectCommand = new AsyncCommand<Category>(Selected);
             //LoadItemsCommand = new AsyncCommand(ExecuteLoadItemsCommand);
             ExecuteLoadItemsCommand();
         }
+       /* private async Task Selected(Category data)
+        {
+            var route = $"{nameof(Views.DataListView)}?category={data}";
+            await AppShell.Current.GoToAsync(route);
+            //throw new NotImplementedException();
+        }*/
+
         private async void ExecuteLoadItemsCommand()
         {
             IsBusy = true;
@@ -35,28 +45,9 @@ namespace KnowledgeApp.Views
             {
                 Categories.Clear();
                 var items = await databse.restService.GetCategory();
-                if (items != null)
+                if (items == null)
                 {
-                    items.Add(new Category() { Id = 1, Name = "Computer" });
-                    items.Add(new Category() { Id = 2, Name = "Maths" });
-                    items.Add(new Category() { Id = 3, Name = "Arts" });
-                    items.Add(new Category() { Id = 4, Name = "AI" });
-                    items.Add(new Category() { Id = 1, Name = "Computer" });
-                    items.Add(new Category() { Id = 2, Name = "Maths" });
-                    items.Add(new Category() { Id = 3, Name = "Arts" });
-                    items.Add(new Category() { Id = 4, Name = "AI" });
-                    items.Add(new Category() { Id = 1, Name = "Computer" });
-                    items.Add(new Category() { Id = 2, Name = "Maths" });
-                    items.Add(new Category() { Id = 3, Name = "Arts" });
-                    items.Add(new Category() { Id = 4, Name = "AI" });
-                    items.Add(new Category() { Id = 2, Name = "Maths" });
-                    items.Add(new Category() { Id = 3, Name = "Arts" });
-                    items.Add(new Category() { Id = 4, Name = "AI" });
-                    items.Add(new Category() { Id = 1, Name = "Computer" });
-                    items.Add(new Category() { Id = 2, Name = "Maths" });
-                    items.Add(new Category() { Id = 3, Name = "Arts" });
-                    items.Add(new Category() { Id = 4, Name = "AI" });
-
+                    items.Add(new Category() { Id = 1, Name = "No category available!" });
                 }
 
                 var totalCategories = items.Count;
@@ -74,11 +65,13 @@ namespace KnowledgeApp.Views
                         var item = items[rowIndex];
                         //count += 1;
                         Random random= new Random();
-                        var label = new Label
+                        var button = new Button
                         {
+                            BindingContext = item,
                             Text = item.Name,
-                            HorizontalTextAlignment = TextAlignment.Center,
-                            VerticalTextAlignment = TextAlignment.Center,
+                            //Command = new MvvmHelpers.Commands.Command(async () => await AppShell.Current.GoToAsync($"{nameof(Views.DataListView)}?category={item}") ),
+                            //HorizontalTextAlignment = TextAlignment.Center,
+                            //VerticalTextAlignment = TextAlignment.Center,
                             HeightRequest = 90,
                             WidthRequest = 110,
                             Margin = 5,
@@ -86,7 +79,8 @@ namespace KnowledgeApp.Views
                             VerticalOptions = LayoutOptions.Fill,
                             HorizontalOptions = LayoutOptions.Fill
                         };
-                    flexLayout.Children.Add(label);
+                    button.Command = new MvvmHelpers.Commands.Command(async () =>  await AppShell.Current.GoToAsync($"{nameof(Views.DataListView)}?category={item}"));
+                    flexLayout.Children.Add(button);
                     //DynamicGrid.Children.Add(label, columnIndex, rowIndex);
                 }
                 activityIndicator.IsRunning = false;

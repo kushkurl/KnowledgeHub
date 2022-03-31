@@ -5,11 +5,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace KnowledgeApp.ViewModels
 {
+    //[QueryProperty(nameof(category), nameof(category))]
     public class DataListViewModel : DataManagerBase
     {
+        private Category category;
+        public Category Category
+        {
+            get { return category; }
+            set
+            {
+                category = value;
+                LoadData(value);
+            }
+        }
         public ObservableRangeCollection<DataContent> Data { get; set; }
         public AsyncCommand RefreshCommand { get; }
         public AsyncCommand AddCommand { get; }
@@ -25,7 +37,7 @@ namespace KnowledgeApp.ViewModels
             //Title = "Jobs";
 
             Data = new ObservableRangeCollection<DataContent>();
-            LoadData();
+            LoadData(category);
             RefreshCommand = new AsyncCommand(Refresh);
             SelectCommand = new AsyncCommand<DataContent>(Selected);
             AddCommand = new AsyncCommand(Add);
@@ -37,20 +49,20 @@ namespace KnowledgeApp.ViewModels
         }
         private async Task Selected(DataContent data)
         {
-            //var route = $"{nameof(Views.JobDetailPage)}?JobId={data.id}";
-            //await AppShell.Current.GoToAsync(route);
-            throw new NotImplementedException();
+            var route = $"{nameof(Views.DataDetailView)}?cId={data}";
+            await AppShell.Current.GoToAsync(route);
+            //throw new NotImplementedException();
         }
         public async Task Refresh()
         {
             IsBusy = true;
             Data.Clear();
-            LoadData();
+            LoadData(Category);
             IsBusy = false;
         }
-        public async void LoadData()
+        public async void LoadData(Category category)
         {
-            IEnumerable<DataContent> data = await restService.GetData();
+            IEnumerable<DataContent> data = await restService.GetData(2);
             Data.AddRange(data);
         }
     }

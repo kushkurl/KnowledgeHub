@@ -8,19 +8,19 @@ using Xamarin.Forms;
 
 namespace KnowledgeApp.ViewModels
 {
-    [QueryProperty(nameof(dataId), nameof(dataId))]
+    [QueryProperty(nameof(data), nameof(data))]
     public class DataDetailViewModel : DataManagerBase
     {
-        private int dataId;
+        private DataContent data;
 
         public AsyncCommand SaveCommand { get; }
         public AsyncCommand DeleteCommand { get; }
-        public int DataId
+        public DataContent Data
         {
-            get { return dataId; }
+            get { return data; }
             set
             {
-                dataId = value;
+                data = value;
                 LoadJob(value);
             }
         }
@@ -32,34 +32,34 @@ namespace KnowledgeApp.ViewModels
         }
         async Task Delete()
         {
-            DataContent job = new DataContent()
+            DataContent DataObj = new DataContent()
             {
-                id = dataId,
+                id = data.id,
                 Title = title,
                 Description = description,
             };
-            if (dataId != 0)
+            if (data != null)
             {
-                await restService.Delete(job);
+                await restService.Delete(DataObj);
             }
 
             await Shell.Current.GoToAsync("..");
         }
         async Task Save()
         {
-            DataContent job = new DataContent()
+            DataContent DataObj = new DataContent()
             {
-                id = dataId,
+                id = data.id,
                 Title = title,
                 Description = description,
             };
-            if (dataId == 0)
+            if (data == null)
             {
-                await restService.Add(job);
+                await restService.Add(DataObj);
             }
             else
             {
-                await restService.Update(job);
+                await restService.Update(DataObj);
             }
 
             await Shell.Current.GoToAsync("..");
@@ -78,9 +78,9 @@ namespace KnowledgeApp.ViewModels
             get => description;
             set => SetProperty(ref description, value);
         }
-        public async void LoadJob(int dataId)
+        public async void LoadJob(DataContent DataObj)
         {
-            var data = await restService.GetData(dataId); ;
+            var data = await restService.GetData(DataObj); ;
             Title = data.Title;
             Description = data.Description;
         }

@@ -10,9 +10,9 @@ namespace KnowledgeHub.Data.Interfaces
     public interface IDataOperation
     {
         bool DoesItemExist(int id);
-        Task<List<DataContent>> Get();
+        Task<List<DataContent>> Get(int cId);
         Task<List<Category>> GetCategories();
-        Task<DataContent> Get(int id);
+        Task<DataContent> Get(int cId, int id);
         Task<DataContent> Insert(DataContent item);
         Task<DataContent> Update(DataContent item);
         void Delete(DataContent item);

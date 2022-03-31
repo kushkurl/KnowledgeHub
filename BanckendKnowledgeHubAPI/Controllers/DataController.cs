@@ -10,7 +10,7 @@ using Xamarin.Forms;
 namespace BanckendKnowledgeHubAPI.Controllers
 {
     [ApiController]
-    [Route("api/Data")]
+    [Route("api/{categoryId:int}/Data")]
     public class DataController : ControllerBase
     {
         //IDataOperation _dataOperation = DependencyService.Get<IDataOperation>();
@@ -22,22 +22,21 @@ namespace BanckendKnowledgeHubAPI.Controllers
         {
             _dataOperation = dataOperation;
         }
-
         [HttpGet]
-        public async Task<ActionResult<List<DataContent>>> Get()
+        public async Task<ActionResult<List<DataContent>>> Get(int categoryId)
         {
             Response.Headers.Add("Access-Control-Allow-Origin", "*");
             //var resp = new DataContent { id = 1, Title = "Test", Description = "testing desc" };
-            return await _dataOperation.Get();
+            return await _dataOperation.Get(categoryId);
             //return dataContent.GetAll();
             //return "working fine";
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<DataContent>> Get(int id)
+        public async Task<ActionResult<DataContent>> Get(int categoryId, int id)
         {
             Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            var data = await _dataOperation.Get(id);
+            var data = await _dataOperation.Get(categoryId, id);
             if (data == null)
                 return BadRequest("Record Not found");
             else

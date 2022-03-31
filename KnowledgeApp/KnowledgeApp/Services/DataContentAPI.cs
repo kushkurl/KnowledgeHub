@@ -11,16 +11,16 @@ namespace KnowledgeApp.Services
     {
         private static string API => $"https://kushagrajobmanagerapi.azurewebsites.net/";
 
-        public async Task<List<DataContent>> GetData()
+        public async Task<List<DataContent>> GetData(int cId)
         {
-            var jsonString = await new WebClientService().GetAsync(API + "api/data/");
+            var jsonString = await new WebClientService().GetAsync(API + "api/"+ cId +"/data/");
             var data = JsonConvert.DeserializeObject<List<DataContent>>(jsonString);
             return data;
             //throw new NotImplementedException();
         }
-        public async Task<DataContent> GetData(int id)
+        public async Task<DataContent> GetData(DataContent DataObj)
         {
-            var jsonString = await new WebClientService().GetAsync(API + "api/data/" + id);
+            var jsonString = await new WebClientService().GetAsync(API + "api/data/" + DataObj.id);
             var data = JsonConvert.DeserializeObject<DataContent>(jsonString);
             return data;
             //throw new NotImplementedException();

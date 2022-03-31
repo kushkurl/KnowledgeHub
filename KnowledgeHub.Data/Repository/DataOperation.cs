@@ -26,10 +26,10 @@ namespace KnowledgeHub.Data.Repository
 
             return await _context.Categories.ToListAsync(); //_itemList;
         }
-        public async Task<List<DataContent>> Get()
+        public async Task<List<DataContent>> Get(int cId)
         {
-            
-            return await _context.DataContent.ToListAsync(); //_itemList;
+            //int id = int.Parse(cId);
+            return await _context.DataContent.Where(c => c.CategoryId == cId).ToListAsync(); //_itemList;
         }
 
        
@@ -46,7 +46,7 @@ namespace KnowledgeHub.Data.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<DataContent> Get(int id)
+        public async Task<DataContent> Get(int cId, int id)
         {
             var data = await _context.DataContent.FindAsync(id);
             //var data = _itemList.Find(x => x.id == id);
