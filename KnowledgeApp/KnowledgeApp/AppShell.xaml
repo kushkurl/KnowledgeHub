@@ -81,7 +81,7 @@
 
 
     <FlyoutItem Title="Categories">
-        <ShellContent Route="DataListView" ContentTemplate="{DataTemplate views:DataListView}"></ShellContent>
+        <ShellContent Route="HomeView" ContentTemplate="{DataTemplate views:HomeView}"></ShellContent>
     </FlyoutItem>
 
 

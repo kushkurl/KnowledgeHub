@@ -18,31 +18,31 @@ namespace KnowledgeApp.Services
             return data;
             //throw new NotImplementedException();
         }
-        public async Task<DataContent> GetData(DataContent DataObj)
+        public async Task<DataContent> GetData(int cId, int dataId)
         {
-            var jsonString = await new WebClientService().GetAsync(API + "api/data/" + DataObj.id);
+            var jsonString = await new WebClientService().GetAsync(API + "api/" + cId + "/data/" + dataId);
             var data = JsonConvert.DeserializeObject<DataContent>(jsonString);
             return data;
             //throw new NotImplementedException();
         }
 
-        public async Task<DataContent> Delete(DataContent data)
+        public async Task<DataContent> Delete(int cId, DataContent data)
         {
-            var jsonString = await new WebClientService().DeleteAsync(API + "api/data/" + data.id);
+            var jsonString = await new WebClientService().DeleteAsync(API + "api/" + cId + "/data/" + data.id);
             var resp = JsonConvert.DeserializeObject<DataContent>(jsonString);
             return resp;
         }
-        public async Task<DataContent> Update(DataContent data)
+        public async Task<DataContent> Update(int cId, DataContent data)
         {
             string payload = JsonConvert.SerializeObject(data);                                                                                 
-            var jsonString = await new WebClientService().PutAsync(API + "api/data/" + data.id, payload, "application/json");
+            var jsonString = await new WebClientService().PutAsync(API + "api/" + cId + "/data/" + data.id, payload, "application/json");
             var resp = JsonConvert.DeserializeObject<DataContent>(jsonString);
             return resp;
         }
-        public async Task<DataContent> Add(DataContent data)
+        public async Task<DataContent> Add(int cId, DataContent data)
         {
             string payload = JsonConvert.SerializeObject(data);
-            var jsonString = await new WebClientService().PostAsync(API + "api/data/" + data.id, payload, "application/json");
+            var jsonString = await new WebClientService().PostAsync(API + "api/" + cId + "/data/" + data.id, payload, "application/json");
             var resp = JsonConvert.DeserializeObject<DataContent>(jsonString);
             return resp;
         }

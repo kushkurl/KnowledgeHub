@@ -11,13 +11,13 @@ namespace KnowledgeApp.Services
         //Task<List<DataContent>> GetAllData();
         Task<List<Category>> GetCategory();
         Task<List<DataContent>> GetData(int cId);
-        Task<DataContent> GetData(DataContent DataObj);
+        Task<DataContent> GetData(int cId, int DataObj);
 
-        Task<DataContent> Delete(DataContent data);
+        Task<DataContent> Delete(int cId, DataContent data);
 
-        Task<DataContent> Update(DataContent data);
+        Task<DataContent> Update(int cId, DataContent data);
 
-        Task<DataContent> Add(DataContent data);
+        Task<DataContent> Add(int cId, DataContent data);
 
     }
 }

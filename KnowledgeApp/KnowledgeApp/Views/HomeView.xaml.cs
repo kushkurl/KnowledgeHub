@@ -1,6 +1,7 @@
 ﻿using KnowledgeApp.Models;
 using KnowledgeApp.ViewModels;
 using MvvmHelpers.Commands;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -79,7 +80,8 @@ namespace KnowledgeApp.Views
                             VerticalOptions = LayoutOptions.Fill,
                             HorizontalOptions = LayoutOptions.Fill
                         };
-                    button.Command = new MvvmHelpers.Commands.Command(async () =>  await AppShell.Current.GoToAsync($"{nameof(Views.DataListView)}?category={item}"));
+                    button.Command = new MvvmHelpers.Commands.Command(async () =>  
+                    await AppShell.Current.GoToAsync($"{nameof(Views.DataListView)}?Category={JsonConvert.SerializeObject(item.Id)}"));
                     flexLayout.Children.Add(button);
                     //DynamicGrid.Children.Add(label, columnIndex, rowIndex);
                 }

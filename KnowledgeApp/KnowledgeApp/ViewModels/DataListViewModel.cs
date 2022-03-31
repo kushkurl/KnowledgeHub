@@ -9,11 +9,11 @@ using Xamarin.Forms;
 
 namespace KnowledgeApp.ViewModels
 {
-    //[QueryProperty(nameof(category), nameof(category))]
+    [QueryProperty(nameof(Category), nameof(Category))]
     public class DataListViewModel : DataManagerBase
     {
-        private Category category;
-        public Category Category
+        private int category;
+        public int Category
         {
             get { return category; }
             set
@@ -37,7 +37,7 @@ namespace KnowledgeApp.ViewModels
             //Title = "Jobs";
 
             Data = new ObservableRangeCollection<DataContent>();
-            LoadData(category);
+            //LoadData(category);
             RefreshCommand = new AsyncCommand(Refresh);
             SelectCommand = new AsyncCommand<DataContent>(Selected);
             AddCommand = new AsyncCommand(Add);
@@ -49,7 +49,7 @@ namespace KnowledgeApp.ViewModels
         }
         private async Task Selected(DataContent data)
         {
-            var route = $"{nameof(Views.DataDetailView)}?cId={data}";
+            var route = $"{nameof(Views.DataDetailView)}?DataId={data.id}";
             await AppShell.Current.GoToAsync(route);
             //throw new NotImplementedException();
         }
@@ -60,9 +60,9 @@ namespace KnowledgeApp.ViewModels
             LoadData(Category);
             IsBusy = false;
         }
-        public async void LoadData(Category category)
+        public async void LoadData(int category)
         {
-            IEnumerable<DataContent> data = await restService.GetData(2);
+            IEnumerable<DataContent> data = await restService.GetData(category);
             Data.AddRange(data);
         }
     }
