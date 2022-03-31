@@ -50,15 +50,15 @@ namespace BanckendKnowledgeHubAPI.Controllers
             await _dataOperation.Insert(data);
             return Ok(data);
         }
-        [HttpPut]
-        public async Task<ActionResult> Update(DataContent data)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(DataContent data, int id)
         {
             Response.Headers.Add("Access-Control-Allow-Origin", "*");
             await _dataOperation.Update(data);
             return Ok(data);
         }
-        [HttpDelete]
-        public async Task<ActionResult> Delete(DataContent data)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(DataContent data, int id)
         {
             Response.Headers.Add("Access-Control-Allow-Origin", "*");
             _dataOperation.Delete(data);

@@ -33,7 +33,7 @@ namespace KnowledgeApp.Services
             return resp;
         }
         public async Task<DataContent> Update(int cId, DataContent data)
-        {
+        {            
             string payload = JsonConvert.SerializeObject(data);                                                                                 
             var jsonString = await new WebClientService().PutAsync(API + "api/" + cId + "/data/" + data.id, payload, "application/json");
             var resp = JsonConvert.DeserializeObject<DataContent>(jsonString);
@@ -42,7 +42,7 @@ namespace KnowledgeApp.Services
         public async Task<DataContent> Add(int cId, DataContent data)
         {
             string payload = JsonConvert.SerializeObject(data);
-            var jsonString = await new WebClientService().PostAsync(API + "api/" + cId + "/data/" + data.id, payload, "application/json");
+            var jsonString = await new WebClientService().PostAsync(API + "api/" + cId + "/data/", payload, "application/json");
             var resp = JsonConvert.DeserializeObject<DataContent>(jsonString);
             return resp;
         }

@@ -34,8 +34,6 @@ namespace KnowledgeApp.ViewModels
         }
         public DataListViewModel()
         {
-            //Title = "Jobs";
-
             Data = new ObservableRangeCollection<DataContent>();
             //LoadData(category);
             RefreshCommand = new AsyncCommand(Refresh);
@@ -49,7 +47,7 @@ namespace KnowledgeApp.ViewModels
         }
         private async Task Selected(DataContent data)
         {
-            var route = $"{nameof(Views.DataDetailView)}?DataId={data.id}";
+            var route = $"{nameof(Views.DataDetailView)}?DataId={data.id}&Categoryid={data.CategoryID}";
             await AppShell.Current.GoToAsync(route);
             //throw new NotImplementedException();
         }
@@ -62,6 +60,7 @@ namespace KnowledgeApp.ViewModels
         }
         public async void LoadData(int category)
         {
+            Data.Clear();
             IEnumerable<DataContent> data = await restService.GetData(category);
             Data.AddRange(data);
         }

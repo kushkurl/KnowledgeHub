@@ -16,6 +16,12 @@
             <Entry Text="{Binding Title}" FontSize="Small"/>
             <Label Text="Description" FontSize="Medium"/>
             <Entry Text="{Binding Description}" FontSize="Small"/>
+            <Label Text="Category" FontSize="Medium"/>
+            <Picker x:Name="PickCategory"
+                Title="Select a Category"
+                TitleColor="Black" ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" 
+                    SelectedItem="{Binding SelectedCategory}">
+            </Picker>
             <Button Text="Save" Command="{Binding SaveCommand}"></Button>
             <Button Text="Delete" Command="{Binding DeleteCommand}"></Button>
         </StackLayout>
