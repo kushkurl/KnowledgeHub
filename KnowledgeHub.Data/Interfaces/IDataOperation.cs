@@ -15,6 +15,6 @@ namespace KnowledgeHub.Data.Interfaces
         Task<DataContent> Get(int cId, int id);
         Task<DataContent> Insert(DataContent item);
         Task<DataContent> Update(DataContent item);
-        void Delete(DataContent item);
+        void Delete(int id);
     }
 }

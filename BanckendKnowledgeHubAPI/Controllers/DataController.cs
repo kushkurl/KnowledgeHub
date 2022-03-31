@@ -58,11 +58,11 @@ namespace BanckendKnowledgeHubAPI.Controllers
             return Ok(data);
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(DataContent data, int id)
+        public async Task<ActionResult> Delete(int id)
         {
             Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            _dataOperation.Delete(data);
-            return Ok(data);
+            _dataOperation.Delete(id);
+            return Ok();
         }
 
     }

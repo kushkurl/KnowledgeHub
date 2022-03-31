@@ -11,7 +11,7 @@ namespace KnowledgeHub.Data.Repository
 {
     public class DataOperation : IDataOperation
     {
-        private List<DataContent> _itemList;
+        //private List<DataContent> _itemList;
         private readonly DataStoreContext _context;
         /*List<DataContent> data = new List<DataContent>{ new DataContent{ id = 1, Title = "Test", Description = "testing desc" },
                 new DataContent{ id = 1, Title = "Test", Description = "testing desc" } };*/
@@ -35,9 +35,13 @@ namespace KnowledgeHub.Data.Repository
        
         public void Delete(int id)
         {
-            _context.Remove(id);
-            /*var data = _itemList.Find(x => x.id == id);
-            _itemList.Remove(data);*/
+            //_context.Remove(id);
+            var data = _context.DataContent.SingleOrDefault(x => x.id == id);
+            if(data != null)
+            {
+                _context.DataContent.Remove(data);
+                _context.SaveChanges();
+            } 
             //throw new NotImplementedException();
         }
 
@@ -78,12 +82,12 @@ namespace KnowledgeHub.Data.Repository
 
        
 
-        public void Delete(DataContent item)
+      /*  public void Delete(DataContent item)
         {
             var resp = _context.Remove(item);
             _context.SaveChanges();
             //return resp;
-        }
+        }*/
         private void InitializeData()
         {
             /* _itemList = new List<DataContent>();
